@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 const App = () => (
   <div>
-    <h1>HELLO Gay WORLD</h1>
+    <h1>HELLO WORLD</h1>
   </div>
 );
 
