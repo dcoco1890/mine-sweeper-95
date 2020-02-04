@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.game-bg-board {
+  background-color: #c0c0c0;
+  border-top: 3px solid #fff;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #818181;
+  border-right: 3px solid #818181;
+  height: 50vh;
+  width: 1000px;
+}
+.cell {
+  background-color: #c0c0c0;
+}
+.App {
+  height: 100vh;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .App {
+    height: 100vh;
+  }
+  .game-bg-board {
+    width: 800px;
+  }
+}
