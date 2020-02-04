@@ -1,9 +1,9 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 
-// const Cell = props => {
-//   const { value } = props;
+const Cell = props => {
 
-//   return <div className="cell"></div>;
-// };
 
-// export default Cell;
+  return <div className="cell"></div>;
+};
+
+export default Cell;
