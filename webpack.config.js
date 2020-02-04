@@ -2,14 +2,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 const HTML_PLUGIN = new HtmlWebpackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html"
+  template: "./public/index.html",
+  filename: "./index.html",
+  favicon: "./public/favicon.ico"
 });
 
 module.exports = {
   entry: "./src/index.js",
   output: {
-    path: path.join(__dirname, "/dist"),
+    path: path.join(__dirname, "/build"),
     filename: "bundled.js"
   },
   module: {
