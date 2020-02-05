@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-// import Cell from "../components/Cell";
+import React from "react";
+import Cell from "../components/Cell";
 
-const Board = () => {
-  //default to 10 for now
-  //   const [width, setWidth] = useState(10);
-  //   const [height, setHeight] = useState(10);
-
+const Board = props => {
+  const { width, height, mines } = props;
+  console.log(width);
   return (
     <div className="game-bg-board">
-      <h3>Game Board</h3>
+      <h3 className="text-center">Game Board</h3>
+      <div className="mine-cells">{}</div>
     </div>
   );
 };

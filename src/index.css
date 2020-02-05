@@ -6,7 +6,6 @@
 }
 
 .game-bg-board {
-    
   background-color: #c0c0c0;
   border-top: 3px solid #fff;
   border-left: 3px solid #fff;
@@ -23,8 +22,18 @@
   height: 100vh;
   background-color: #eee;
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
+}
+
+.cell {
+  height: 10px;
+  width: 10px;
+}
+
+.mine-cells {
+  display: flex;
 }
 
 @media (max-width: 1024px) {
