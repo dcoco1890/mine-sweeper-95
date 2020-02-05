@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
 import Button from "./Button";
+import Helpfuncs from "../utils/help-func/index"
 
 // Create cell data, takes in height, width, and num of mines
 const createCellData = (h, w, m) => {
@@ -19,7 +20,9 @@ const createCellData = (h, w, m) => {
       };
     }
   }
-  // something here that sets up mines
+ 
+  // Works, sets random mines
+  cellArray = Helpfuncs.plantMines(h,w,m,cellArray);
   // something here that figures out how many mines each square is touching
 
   return cellArray;
@@ -30,9 +33,9 @@ const Game = () => {
   const [width, setWidth] = useState(5);
   const [height, setHeight] = useState(5);
 
-  // cells and set cells. the useeffect causes it to log the cells after clicking play
+  // The Array of Cell Data
   const [cells, setCells] = useState([]);
-  useEffect(() => console.log(cells));
+  useEffect(() => console.log(cells)); // This logs cell data to console
   const [mines, setMines] = useState(5);
   // Keeps track of whether user is playing, could also create game data
   const [playing, isPlaying] = useState(false);
