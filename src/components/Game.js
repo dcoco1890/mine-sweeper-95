@@ -5,26 +5,30 @@ import Button from "./Button";
 import Help from "../utils/help-func/index";
 
 const Game = () => {
-  const [rows, setRows] = useState(30);
-  const [cols, setCols] = useState(50);
-  const [mines, setMines] = useState(50);
+  const [rows, setRows] = useState(15);
+  const [cols, setCols] = useState(25);
+  const [mines, setMines] = useState(100);
 
   // The Array of Cell Data
   const [cells, setCells] = useState(() => {
-    return Help.createCellData(rows, cols, mines);
+    const initState = Help.createCellData(rows, cols, mines);
+    return initState;
   });
   // Keeps track of whether user is playing
   const [playing, setPlaying] = useState(false);
-  useEffect(() => console.log(cells)); // This logs cell data to console
+  //   useEffect(() => console.log(cells)); // This logs cell data to console
 
   const clickTest = (row, col) => {
     let copy = [...cells];
+    if (copy[row][col].isMine) {
+      console.log("Game Over");
+    }
     copy[row][col].isRevealed = true;
     setCells(copy);
   };
 
   const resetBoard = () => {
-    setCells(createCellData(rows, cols, mines));
+    setCells(Help.createCellData(rows, cols, mines));
   };
 
   return (
