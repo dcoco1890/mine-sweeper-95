@@ -27,6 +27,8 @@ const Game = () => {
     setCells(copy);
   };
 
+ 
+
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
   };

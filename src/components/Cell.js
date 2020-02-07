@@ -1,13 +1,38 @@
 import React, { useState } from "react";
 
+const FLAG = "🚩";
+const BOMB = "💣";
+
 const Cell = props => {
+  const { cellValue, cellClass, row, col, cellId } = props;
+
+  const [cellval, setCellVal] = useState(null);
+
+  const getCellVal = cellValue => {
+    let x = "";
+    if (cellValue.isMine) {
+      x = BOMB;
+    }
+
+    if (cellValue.minesTouching) {
+      x = cellValue.minesTouching.toString();
+      console.log(cellValue);
+    }
+    return x;
+  };
   return (
     <div
-      className={props.cellClass}
-      id={props.cellId}
-      onClick={() => props.clickTest(props.row, props.col)}
+      className={cellClass}
+      id={cellId}
+      onClick={() => {
+        props.clickTest(row, col);
+        const CV = getCellVal(cellValue);
+        if (CV) {
+          setCellVal(CV);
+        }
+      }}
     >
-      {props.minesTouching}
+      {cellval}
     </div>
   );
 };

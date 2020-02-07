@@ -3,7 +3,7 @@ import Cell from "../components/Cell";
 
 const Board = props => {
   // const { width, height, mines } = props;
-  const FLAG = "🚩";
+ 
   // destructed props becuz we know the data we're getting
   const { cols, rows, cells, clickTest } = props;
   const width = props.cols * 14 + 1;
@@ -25,6 +25,8 @@ const Board = props => {
           row={i}
           col={j}
           clickTest={clickTest}
+          //Pass the attributes of current cell to that cell
+          cellValue={cells[i][j]}
         />
       );
     }
