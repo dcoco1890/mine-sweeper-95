@@ -3,37 +3,36 @@ import React, { useState } from "react";
 const FLAG = "🚩";
 const BOMB = "💣";
 
-
 const Cell = props => {
-const { cellValue } = props;
+  const { cellValue, cellClass, row, col, cellId } = props;
 
-const [cellval, setCellVal] = useState(null);
+  const [cellval, setCellVal] = useState(null);
 
+  const getCellVal = cellValue => {
+    let x = "";
+    if (cellValue.isMine) {
+      x = BOMB;
+    }
 
-const getCellVal = (cellValue) => {
-  let x = '';
-  if(cellValue.isMine) {
-    x = BOMB;
-  }
-
-  if(cellValue.isFlag) {
-   x = FLAG;
-  }
-  return x
-}
+    if (cellValue.minesTouching) {
+      x = cellValue.minesTouching.toString();
+      console.log(cellValue);
+    }
+    return x;
+  };
   return (
     <div
-      className={props.cellClass}
-      id={props.cellId}
+      className={cellClass}
+      id={cellId}
       onClick={() => {
-        props.clickTest(props.row, props.col);
+        props.clickTest(row, col);
         const CV = getCellVal(cellValue);
-        if(CV){
-          setCellVal(CV)
+        if (CV) {
+          setCellVal(CV);
         }
       }}
     >
-     {cellval}
+      {cellval}
     </div>
   );
 };

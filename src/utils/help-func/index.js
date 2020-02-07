@@ -69,7 +69,7 @@ const getMineNeighbors = (r, c, m, arr) => {
 
         const cellsNextToMineCell = getSurroundingCells(x, y, r, c, newArr);
         const mines = cellsNextToMineCell.filter(item => item.isMine);
-
+        // console.log(mines);
         if (mines.length) {
           newArr[i][j].minesTouching = mines.length;
         } else {
