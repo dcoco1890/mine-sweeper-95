@@ -4,6 +4,8 @@ import { PLANT_FLAG, CLICK_CELL, CREATE_GAME } from "./constants";
 
 export const clickCell = payload => ({
   type: CLICK_CELL,
+  x: payload.x,
+  y: payload.y,
   payload
 });
 
@@ -12,4 +14,7 @@ export const plantFlag = payload => ({
   payload
 });
 
-export const 
+export const setupGame = gameArray => ({
+  type: CREATE_GAME,
+  gameArray
+});

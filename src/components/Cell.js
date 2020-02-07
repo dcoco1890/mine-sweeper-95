@@ -1,12 +1,31 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { plantFlag, clickCell } from "../utils/redux/actions";
 
 const FLAG = "🚩";
 const BOMB = "💣";
 
-const Cell = ({ cellValue, cellClass, row, col, cellId, clickTest }) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    click: cellVal => {
+      console.log(cellVal);
+      dispatch(clickCell(cellVal));
+    }
+  };
+};
+
+const ConnectedCell = ({
+  cellValue,
+  cellClass,
+  row,
+  col,
+  cellId,
+  clickTest,
+  click
+}) => {
   //   const { cellValue, cellClass, row, col, cellId } = props;
   const [cellval, setCellVal] = useState(null);
-
+  //   console.log(cellValue);
   const getCellVal = cellValue => {
     let x = "";
     if (cellValue.isMine) {
@@ -14,26 +33,16 @@ const Cell = ({ cellValue, cellClass, row, col, cellId, clickTest }) => {
     }
     if (cellValue.minesTouching) {
       x = cellValue.minesTouching.toString();
-      console.log(cellValue);
     }
     return x;
   };
 
   return (
-    <div
-      className={cellClass}
-      id={cellId}
-      onClick={() => {
-        clickTest(row, col);
-        const CV = getCellVal(cellValue);
-        if (CV) {
-          setCellVal(CV);
-        }
-      }}
-    >
+    <div className={cellClass} id={cellId} onClick={() => click(cellValue)}>
       {cellval}
     </div>
   );
 };
 
+const Cell = connect(null, mapDispatchToProps)(ConnectedCell);
 export default Cell;

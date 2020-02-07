@@ -3,8 +3,16 @@ import Board from "./Board";
 import Button from "./Button";
 // Help is just a function that gives us the cell data
 import Help from "../utils/help-func/index";
+import { connect } from "react-redux";
+import { setupGame } from "../utils/redux/actions";
 
-const Game = () => {
+const mapDispatchToProps = dispatch => {
+  return {
+    start: state => dispatch(setupGame(state))
+  };
+};
+
+const ConnectedGame = props => {
   const [rows, setRows] = useState(15);
   const [cols, setCols] = useState(25);
   const [mines, setMines] = useState(100);
@@ -27,8 +35,6 @@ const Game = () => {
     setCells(copy);
   };
 
- 
-
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
   };
@@ -40,6 +46,7 @@ const Game = () => {
         <Button
           text="Play"
           onClick={() => {
+            props.start(cells);
             setPlaying(true);
           }}
         />
@@ -62,4 +69,5 @@ const Game = () => {
   );
 };
 
+const Game = connect(null, mapDispatchToProps)(ConnectedGame);
 export default Game;
