@@ -1,40 +1,45 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { plantFlag, clickCell } from "../utils/redux/actions";
 
 const FLAG = "🚩";
 const BOMB = "💣";
 
-const Cell = props => {
-  const { cellValue, cellClass, row, col, cellId } = props;
-
-  const [cellval, setCellVal] = useState(null);
-
-  const getCellVal = cellValue => {
-    let x = "";
-    if (cellValue.isMine) {
-      x = BOMB;
+const mapDispatchToProps = dispatch => {
+  return {
+    click: cellVal => {
+      dispatch(clickCell(cellVal));
     }
-
-    if (cellValue.minesTouching) {
-      x = cellValue.minesTouching.toString();
-      console.log(cellValue);
-    }
-    return x;
   };
+};
+
+const ConnectedCell = ({ cellValue, cellId, click }) => {
+  const [cellval, setCellVal] = useState(cellValue);
+  const [cellClass, setCellClass] = useState("cell");
+ 
+  const getCellVal = CV => {
+    let x = "";
+    if (CV.isMine) {
+      return (x = BOMB);
+    }
+    if (CV.minesTouching) {
+      return (x = cellValue.minesTouching.toString());
+    }
+  };
+
   return (
     <div
       className={cellClass}
       id={cellId}
       onClick={() => {
-        props.clickTest(row, col);
-        const CV = getCellVal(cellValue);
-        if (CV) {
-          setCellVal(CV);
-        }
+        click(cellValue);
+        setCellClass(prev => prev + " on");
       }}
     >
-      {cellval}
+      {cellval.isRevealed && getCellVal(cellval)}
     </div>
   );
 };
 
+const Cell = connect(null, mapDispatchToProps)(ConnectedCell);
 export default Cell;

@@ -3,31 +3,39 @@ import Board from "./Board";
 import Button from "./Button";
 // Help is just a function that gives us the cell data
 import Help from "../utils/help-func/index";
+import { connect } from "react-redux";
+import { setupGame } from "../utils/redux/actions";
 
-const Game = () => {
+const mapDispatchToProps = dispatch => {
+  return {
+    start: state => dispatch(setupGame(state))
+  };
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+
+const ConnectedGame = props => {
   const [rows, setRows] = useState(15);
   const [cols, setCols] = useState(25);
   const [mines, setMines] = useState(100);
+  // Keeps track of whether user is playing
+  const [playing, setPlaying] = useState(false);
 
   // The Array of Cell Data
   const [cells, setCells] = useState(() => {
     const initState = Help.createCellData(rows, cols, mines);
     return initState;
   });
-  // Keeps track of whether user is playing
-  const [playing, setPlaying] = useState(false);
-  //   useEffect(() => console.log(cells)); // This logs cell data to console
-
-  const clickTest = (row, col) => {
-    let copy = [...cells];
-    if (copy[row][col].isMine) {
-      console.log("Game Over");
+  
+  useEffect(() => {
+    if (playing) {
+      setCells(...props.state);
     }
-    copy[row][col].isRevealed = true;
-    setCells(copy);
-  };
+  }, []);
 
- 
 
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
@@ -40,6 +48,7 @@ const Game = () => {
         <Button
           text="Play"
           onClick={() => {
+            props.start(cells);
             setPlaying(true);
           }}
         />
@@ -55,11 +64,10 @@ const Game = () => {
 
       {/*When playing is true, display the board with this info*/}
       {/* {playing && <Board width={width} height={height} mines={mines} />} */}
-      {playing && (
-        <Board cells={cells} rows={rows} cols={cols} clickTest={clickTest} />
-      )}
+      {playing && <Board cells={cells} rows={rows} cols={cols} />}
     </div>
   );
 };
 
+const Game = connect(mapStateToProps, mapDispatchToProps)(ConnectedGame);
 export default Game;
