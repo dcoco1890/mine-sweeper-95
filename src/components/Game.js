@@ -20,9 +20,9 @@ const mapStateToProps = state => {
 };
 
 const ConnectedGame = props => {
-  const [rows, setRows] = useState(15);
-  const [cols, setCols] = useState(25);
-  const [mines, setMines] = useState(100);
+  const [rows, setRows] = useState(10);
+  const [cols, setCols] = useState(10);
+  const [mines, setMines] = useState(20);
   // Keeps track of whether user is playing
   const [playing, setPlaying] = useState(false);
 
