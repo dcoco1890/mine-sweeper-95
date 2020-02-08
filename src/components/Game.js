@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
-import Button from "./Button";
+
+import PlayerButtons from "./PlayerButtons";
 // Help is just a function that gives us the cell data
 import Help from "../utils/help-func/index";
 import { connect } from "react-redux";
@@ -13,7 +14,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
+  // uncomment this out if you want to see the state change in console
+  // console.log(state);
   return state;
 };
 
@@ -29,13 +31,12 @@ const ConnectedGame = props => {
     const initState = Help.createCellData(rows, cols, mines);
     return initState;
   });
-  
+
   useEffect(() => {
     if (playing) {
       setCells(...props.state);
     }
   }, []);
-
 
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
@@ -43,24 +44,18 @@ const ConnectedGame = props => {
 
   return (
     <div className="App">
-      {/* When not playing, display Play Button that sets isplaying to true. */}
-      {!playing ? (
-        <Button
-          text="Play"
-          onClick={() => {
-            props.start(cells);
-            setPlaying(true);
-          }}
-        />
-      ) : (
-        <Button
-          text="Reset"
-          onClick={() => {
-            setPlaying(false);
-            resetBoard();
-          }}
-        />
-      )}
+      {/* Tried to Clean this up a bit by separating it */}
+      <PlayerButtons
+        playing={playing}
+        onReset={() => {
+          setPlaying(false);
+          resetBoard();
+        }}
+        onPlay={() => {
+          props.start(cells);
+          setPlaying(true);
+        }}
+      />
 
       {/*When playing is true, display the board with this info*/}
       {/* {playing && <Board width={width} height={height} mines={mines} />} */}

@@ -6,11 +6,9 @@
 }
 
 .game-bg-board {
-  width: 150px;
   line-height: 0;
-  margin: auto;
   box-shadow: 0px 0px 20px white;
-  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 .App {
@@ -34,10 +32,6 @@
 
 .on {
   background-color: aquamarine;
-}
-
-.mine-cells {
-  display: flex;
 }
 
 @media (max-width: 1024px) {
