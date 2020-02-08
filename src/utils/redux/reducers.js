@@ -2,12 +2,13 @@ import { PLANT_FLAG, CLICK_CELL, CREATE_GAME } from "./constants";
 // import { combineReducers } from "redux";
 
 const mineSweeping = (state = {}, action) => {
+  //   console.log(state);
   switch (action.type) {
     case CREATE_GAME:
       return Object.assign({}, action.gameArray);
     case CLICK_CELL:
-      console.log(action.payload.x);
-      console.log(action.payload.y);
+      //   console.log(action.payload.x);
+      //   console.log(action.payload.y);
       let copy = state;
       copy[action.payload.x][action.payload.y].isRevealed = true;
 
@@ -25,8 +26,3 @@ const mineSweeping = (state = {}, action) => {
 };
 
 export default mineSweeping;
-
-// const rootReducer = combineReducers({
-//     mineSweeping,
-//     null
-// })

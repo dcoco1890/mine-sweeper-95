@@ -12,28 +12,30 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+
 const ConnectedGame = props => {
   const [rows, setRows] = useState(15);
   const [cols, setCols] = useState(25);
   const [mines, setMines] = useState(100);
+  // Keeps track of whether user is playing
+  const [playing, setPlaying] = useState(false);
 
   // The Array of Cell Data
   const [cells, setCells] = useState(() => {
     const initState = Help.createCellData(rows, cols, mines);
     return initState;
   });
-  // Keeps track of whether user is playing
-  const [playing, setPlaying] = useState(false);
-  //   useEffect(() => console.log(cells)); // This logs cell data to console
-
-  const clickTest = (row, col) => {
-    let copy = [...cells];
-    if (copy[row][col].isMine) {
-      console.log("Game Over");
+  
+  useEffect(() => {
+    if (playing) {
+      setCells(...props.state);
     }
-    copy[row][col].isRevealed = true;
-    setCells(copy);
-  };
+  }, []);
+
 
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
@@ -62,12 +64,10 @@ const ConnectedGame = props => {
 
       {/*When playing is true, display the board with this info*/}
       {/* {playing && <Board width={width} height={height} mines={mines} />} */}
-      {playing && (
-        <Board cells={cells} rows={rows} cols={cols} clickTest={clickTest} />
-      )}
+      {playing && <Board cells={cells} rows={rows} cols={cols} />}
     </div>
   );
 };
 
-const Game = connect(null, mapDispatchToProps)(ConnectedGame);
+const Game = connect(mapStateToProps, mapDispatchToProps)(ConnectedGame);
 export default Game;

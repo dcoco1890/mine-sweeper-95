@@ -8,38 +8,35 @@ const BOMB = "💣";
 const mapDispatchToProps = dispatch => {
   return {
     click: cellVal => {
-      console.log(cellVal);
       dispatch(clickCell(cellVal));
     }
   };
 };
 
-const ConnectedCell = ({
-  cellValue,
-  cellClass,
-  row,
-  col,
-  cellId,
-  clickTest,
-  click
-}) => {
-  //   const { cellValue, cellClass, row, col, cellId } = props;
-  const [cellval, setCellVal] = useState(null);
-  //   console.log(cellValue);
-  const getCellVal = cellValue => {
+const ConnectedCell = ({ cellValue, cellId, click }) => {
+  const [cellval, setCellVal] = useState(cellValue);
+  const [cellClass, setCellClass] = useState("cell");
+ 
+  const getCellVal = CV => {
     let x = "";
-    if (cellValue.isMine) {
-      x = BOMB;
+    if (CV.isMine) {
+      return (x = BOMB);
     }
-    if (cellValue.minesTouching) {
-      x = cellValue.minesTouching.toString();
+    if (CV.minesTouching) {
+      return (x = cellValue.minesTouching.toString());
     }
-    return x;
   };
 
   return (
-    <div className={cellClass} id={cellId} onClick={() => click(cellValue)}>
-      {cellval}
+    <div
+      className={cellClass}
+      id={cellId}
+      onClick={() => {
+        click(cellValue);
+        setCellClass(prev => prev + " on");
+      }}
+    >
+      {cellval.isRevealed && getCellVal(cellval)}
     </div>
   );
 };
