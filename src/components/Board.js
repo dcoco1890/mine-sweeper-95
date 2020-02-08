@@ -5,7 +5,8 @@ const Board = props => {
   // const { width, height, mines } = props;
   // destructed props becuz we know the data we're getting
   const { cols, rows, cells } = props;
-  const width = props.cols * 34 + 1;
+  const width = props.cols * 34 + 20;
+  console.log(width);
 
   let rowsArr = [];
 

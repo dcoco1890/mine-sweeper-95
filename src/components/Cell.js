@@ -35,8 +35,9 @@ const ConnectedCell = ({ cellValue, cellId, click }) => {
         click(cellValue);
         setCellClass(prev => prev + " on");
       }}
-    >
+    ><p>
       {cellval.isRevealed && getCellVal(cellval)}
+      </p>
     </div>
   );
 };
