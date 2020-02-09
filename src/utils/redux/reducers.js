@@ -1,4 +1,4 @@
-import { PLANT_FLAG, CLICK_CELL, CREATE_GAME } from "./constants";
+import { PLANT_FLAG, CLICK_CELL, CREATE_GAME, REVEAL_BOARD } from "./constants";
 // import { combineReducers } from "redux";
 
 const mineSweeping = (state = {}, action) => {
@@ -20,6 +20,14 @@ const mineSweeping = (state = {}, action) => {
 
     case PLANT_FLAG:
       return state;
+    // Should loop through and turn every cell to revealed
+    case REVEAL_BOARD:
+      console.log("revealing");
+      let obj = state;
+      Object.entries(obj).forEach(([key, value]) => {
+        return value.map(item => (item.isRevealed = true));
+      });
+      return Object.assign({}, obj);
     default:
       return state;
   }

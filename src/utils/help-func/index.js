@@ -85,9 +85,9 @@ const getMineNeighbors = (r, c, m, arr) => {
 /*******Helper function that returns the array of cells with mines planted ********/
 export default {
   createCellData: function(r, c, m) {
-    let cellArray = [];
+    let cellArray = {};
     for (let i = 0; i < r; i++) {
-      cellArray.push([]);
+      cellArray[i] = [];
       for (let j = 0; j < c; j++) {
         cellArray[i][j] = {
           x: i,
@@ -104,4 +104,11 @@ export default {
     cellArray = getMineNeighbors(r, c, m, cellArray);
     return cellArray;
   }
+  //   revealAllCells: function(r, c, arr) {
+  //       for (let i = 0; i < r; i++){
+  //           for (let j = 0; j < c; j++){
+
+  //           }
+  //       }
+  //   }
 };
