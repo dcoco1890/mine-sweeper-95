@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { plantFlag, clickCell } from "../utils/redux/actions";
+import { plantFlag, clickCell, revealBoard } from "../utils/redux/actions";
 
 const FLAG = "🚩";
 const BOMB = "💣";
@@ -13,10 +13,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const ConnectedCell = ({ cellValue, cellId, click }) => {
-  const [cellval, setCellVal] = useState(cellValue);
+const ConnectedCell = ({ cellValue, cellId, click, classer }) => {
   const [cellClass, setCellClass] = useState("cell");
- 
+
+  const cellInfo = cellValue;
+
   const getCellVal = CV => {
     let x = "";
     if (CV.isMine) {
@@ -36,7 +37,13 @@ const ConnectedCell = ({ cellValue, cellId, click }) => {
         setCellClass(prev => prev + " on");
       }}
     >
-      {cellval.isRevealed && getCellVal(cellval)}
+      <p
+        className={
+          cellInfo.isRevealed ? `val-${getCellVal(cellInfo)}` : undefined
+        }
+      >
+        {cellInfo.isRevealed && getCellVal(cellInfo)}
+      </p>
     </div>
   );
 };
