@@ -24,8 +24,17 @@ const mineSweeping = (state = {}, action) => {
       }
 
     case PLANT_FLAG:
-      return state;
-    // Should loop through and turn every cell to revealed
+      let newState = state;
+      if (newState[action.payload.x][action.payload.y].isRevealed) {
+        return state;
+      } else if (newState[action.payload.x][action.payload.y].isFlag) {
+        newState[action.payload.x][action.payload.y].isFlag = false;
+        return Object.assign({}, state, newState);
+      } else {
+        newState[action.payload.x][action.payload.y].isFlag = true;
+        return Object.assign({}, state, newState);
+      }
+
     case REVEAL_BOARD:
       let obj = state;
       Object.entries(obj).forEach(([key, value]) => {

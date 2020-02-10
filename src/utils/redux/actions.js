@@ -11,6 +11,8 @@ export const clickCell = payload => ({
 
 export const plantFlag = payload => ({
   type: PLANT_FLAG,
+  x: payload.x,
+  y: payload.y,
   payload
 });
 
