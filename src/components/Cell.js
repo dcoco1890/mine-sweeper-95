@@ -5,22 +5,28 @@ import { plantFlag, clickCell, revealBoard } from "../utils/redux/actions";
 const FLAG = "🚩";
 const BOMB = "💣";
 
+// We need each cell to be able to call a dispatch on click to modify
+//  that cell, it needs reveal to show the board when a bomb is clicked
 const mapDispatchToProps = dispatch => {
   return {
     click: cellVal => {
       dispatch(clickCell(cellVal));
+    },
+    reveal: () => {
+      dispatch(revealBoard());
     }
   };
 };
 
-const ConnectedCell = ({ cellValue, cellId, click, classer }) => {
+const ConnectedCell = ({ cellValue, cellID, click, reveal, classer }) => {
   const [cellClass, setCellClass] = useState("cell");
 
   const cellInfo = cellValue;
 
   const getCellVal = CV => {
-    let x = "";
+    let x;
     if (CV.isMine) {
+      reveal();
       return (x = BOMB);
     }
     if (CV.minesTouching) {
@@ -30,8 +36,8 @@ const ConnectedCell = ({ cellValue, cellId, click, classer }) => {
 
   return (
     <div
-      className={cellClass}
-      id={cellId}
+      className={classer === "cell" ? cellClass : classer}
+      id={cellID}
       onClick={() => {
         click(cellValue);
         setCellClass(prev => prev + " on");
