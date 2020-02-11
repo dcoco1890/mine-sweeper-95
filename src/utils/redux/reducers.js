@@ -7,6 +7,7 @@ const mineSweeping = (state = {}, action) => {
   switch (action.type) {
     case CREATE_GAME:
       return Object.assign({}, action.gameArray);
+      
     case CLICK_CELL:
       //   console.log(action.payload.x);
       //   console.log(action.payload.y);
@@ -22,7 +23,7 @@ const mineSweeping = (state = {}, action) => {
           (copy[action.payload.x][action.payload.y].isRevealed = true)
         );
       }
-
+      
     case PLANT_FLAG:
       let newState = state;
       if (newState[action.payload.x][action.payload.y].isRevealed) {
