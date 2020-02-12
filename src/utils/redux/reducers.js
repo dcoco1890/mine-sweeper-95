@@ -60,7 +60,8 @@ const revealHelper = state => {
 // I think this could be useful in determining a win
 const flagValReducer = (state = [], action) => {
   if (action.type === PLANT_FLAG) {
-    return state.concat([action.payload.x, action.payload.y]);
+    console.log(state);
+    return state.concat([[action.payload.x, action.payload.y]]);
   } else if (action.type === REMOVE_FLAG) {
     return state.slice(0, state.length - 1);
   } else {
