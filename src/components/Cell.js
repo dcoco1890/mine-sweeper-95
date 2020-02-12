@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { plantFlag, clickCell, revealBoard } from "../utils/redux/actions";
+import {
+  plantFlag,
+  clickCell,
+  revealBoard,
+  removeFlag
+} from "../utils/redux/actions";
 
 const FLAG = "🚩";
 const BOMB = "💣";
@@ -15,13 +20,24 @@ const mapDispatchToProps = dispatch => {
     reveal: () => {
       dispatch(revealBoard());
     },
-    flag: cellVal => {
+    pFlag: cellVal => {
       dispatch(plantFlag(cellVal));
+    },
+    rFlag: cellVal => {
+      dispatch(removeFlag(cellVal));
     }
   };
 };
 
-const ConnectedCell = ({ cellValue, cellID, click, reveal, classer, flag }) => {
+const ConnectedCell = ({
+  cellValue,
+  cellID,
+  click,
+  reveal,
+  classer,
+  pFlag,
+  rFlag
+}) => {
   const [cellClass, setCellClass] = useState("cell");
 
   const cellInfo = cellValue;
@@ -47,12 +63,12 @@ const ConnectedCell = ({ cellValue, cellID, click, reveal, classer, flag }) => {
     <div
       onContextMenu={event => {
         event.preventDefault();
-        if (cellInfo.isRevealed) return;
-        if (cellInfo.isFlag) {
-          flag(cellInfo);
+
+        if (!cellInfo.isFlag) {
+          pFlag(cellInfo);
           setCellClass("cell");
         } else {
-          flag(cellInfo);
+          rFlag(cellInfo);
         }
 
         console.log(cellInfo);
