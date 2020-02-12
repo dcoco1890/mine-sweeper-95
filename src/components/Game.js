@@ -16,22 +16,18 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+// Grabbing the initial (or new) state and giving it to the comp
 const mapStateToProps = state => {
-  // uncomment this out if you want to see the state change in console
-  return { state };
+  const {
+    gameData: { rows, cols, mines },
+    gameArray
+  } = state;
+  return { gameArray, rows, cols, mines };
 };
 
-const ConnectedGame = props => {
-  const [rows, setRows] = useState(10);
-  const [cols, setCols] = useState(10);
-  const [mines, setMines] = useState(20);
+const ConnectedGame = ({ start, reveal, gameArray, rows, cols, mines }) => {
   const [playing, setPlaying] = useState(false);
-
-  // The Array of Cell Data
-  const [cells, setCells] = useState(() => {
-    const initState = Help.createCellData(rows, cols, mines);
-    return initState;
-  });
+  const [cells, setCells] = useState(gameArray);
 
   const resetBoard = () => {
     setCells(Help.createCellData(rows, cols, mines));
@@ -47,17 +43,17 @@ const ConnectedGame = props => {
           resetBoard();
         }}
         onPlay={() => {
-          props.start(cells);
+          start(cells);
           setPlaying(true);
         }}
         onReveal={() => {
-          props.reveal();
+          reveal();
         }}
       />
 
       {/*When playing is true, display the board with this info*/}
 
-      {playing && <Board cells={props.state} rows={rows} cols={cols} />}
+      {playing && <Board />}
     </div>
   );
 };
