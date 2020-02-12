@@ -13,12 +13,12 @@ const Board = props => {
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      let cellId = i + "_" + j;
+      let cellID = i + "_" + j;
 
       rowsArr.push(
         <Cell
-          cellId={cellId}
-          key={cellId}
+          cellID={cellID}
+          key={cellID}
           row={i}
           col={j}
           cellValue={cells[i][j]}

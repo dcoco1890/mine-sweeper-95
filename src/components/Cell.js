@@ -5,33 +5,60 @@ import { plantFlag, clickCell, revealBoard } from "../utils/redux/actions";
 const FLAG = "🚩";
 const BOMB = "💣";
 
+// We need each cell to be able to call a dispatch on click to modify
+//  that cell, it needs reveal to show the board when a bomb is clicked
 const mapDispatchToProps = dispatch => {
   return {
     click: cellVal => {
       dispatch(clickCell(cellVal));
+    },
+    reveal: () => {
+      dispatch(revealBoard());
+    },
+    flag: cellVal => {
+      dispatch(plantFlag(cellVal));
     }
   };
 };
 
-const ConnectedCell = ({ cellValue, cellId, click, classer }) => {
+const ConnectedCell = ({ cellValue, cellID, click, reveal, classer, flag }) => {
   const [cellClass, setCellClass] = useState("cell");
 
   const cellInfo = cellValue;
 
   const getCellVal = CV => {
-    let x = "";
-    if (CV.isMine) {
-      return (x = BOMB);
+    let x;
+
+    if (CV.isFlag) {
+      return (x = FLAG);
     }
-    if (CV.minesTouching) {
+
+    if (CV.isMine) {
+      reveal();
+      return (x = BOMB);
+    } else if (CV.isFlag) {
+      return (x = FLAG);
+    } else if (CV.minesTouching) {
       return (x = cellValue.minesTouching.toString());
     }
   };
 
   return (
     <div
-      className={cellClass}
-      id={cellId}
+      onContextMenu={event => {
+        event.preventDefault();
+        if (cellInfo.isRevealed) return;
+        if (cellInfo.isFlag) {
+          flag(cellInfo);
+          setCellClass("cell");
+        } else {
+          flag(cellInfo);
+        }
+
+        console.log(cellInfo);
+      }}
+      className={classer === "cell" ? cellClass : classer}
+      id={cellID}
       onClick={() => {
         click(cellValue);
         setCellClass(prev => prev + " on");
@@ -42,7 +69,7 @@ const ConnectedCell = ({ cellValue, cellId, click, classer }) => {
           cellInfo.isRevealed ? `val-${getCellVal(cellInfo)}` : undefined
         }
       >
-        {cellInfo.isRevealed && getCellVal(cellInfo)}
+        {(cellInfo.isFlag || cellInfo.isRevealed) && getCellVal(cellInfo)}
       </p>
     </div>
   );

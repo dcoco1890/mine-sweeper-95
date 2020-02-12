@@ -103,12 +103,20 @@ export default {
     cellArray = plantMines(r, c, m, cellArray);
     cellArray = getMineNeighbors(r, c, m, cellArray);
     return cellArray;
+  },
+  revealSquares: function(x, y, data) {
+    const newData = data;
+    // So, for now, this is hard coded rows and cols. will need to be fixed,
+    // Maybe by storing rows and cols as part of state in redux
+    let area = getSurroundingCells(x, y, 10, 10, newData);
+    area.map(cell => {
+      if (!cell.isFlag && !cell.isRevealed && (cell.isEmpty || !cell.isMine)) {
+        newData[x][y].isRevealed = true;
+        if (cell.isEmpty) {
+          this.revealSquares(cell.x, cell.y, newData);
+        }
+      }
+    });
+    return newData;
   }
-  //   revealAllCells: function(r, c, arr) {
-  //       for (let i = 0; i < r; i++){
-  //           for (let j = 0; j < c; j++){
-
-  //           }
-  //       }
-  //   }
 };
